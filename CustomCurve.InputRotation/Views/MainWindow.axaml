@@ -1,0 +1,60 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:CustomCurve.InputRotation.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:CustomCurve.InputRotation.Views"
+        mc:Ignorable="d"
+        CanResize="True"
+        MinWidth="600" MinHeight="600" 
+        Width="800" Height="600"
+        WindowStartupLocation="CenterScreen"
+        x:Class="CustomCurve.InputRotation.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="CustomCurve | Advanced"
+        RenderOptions.BitmapInterpolationMode="HighQuality">
+
+    <Design.DataContext>
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="*,Auto" Margin="20">
+        <TabControl>
+            <TabControl.Styles>
+                <Style Selector="TabItem">
+                    <Setter Property="FontSize" Value="18"/>
+                </Style>
+
+                <Style Selector="TabItem.placeholder">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">This is a placeholder for missing functionality</TextBlock>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Styles>
+
+            <TabItem Header="Metric" Classes="placeholder"/>
+            <TabItem Header="Mode" Classes="placeholder"/>
+
+            <TabItem Header="Rotation" IsSelected="True">
+                <views:InputRotationView DataContext="{Binding Rotation}" Margin="0,20,0,0"/>
+            </TabItem>
+
+            <TabItem Header="VSM" Classes="placeholder"/>
+        </TabControl>
+
+        <Grid Grid.Row="1" Margin="0,20,0,0" ColumnDefinitions="Auto,*">
+            <Button Click="OnThemeClick" ToolTip.Tip="Toggle Dark/Light window theme">Theme</Button>
+            
+            <StackPanel Grid.Column="1" Spacing="5" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button IsDefault="True">Apply</Button>
+                <Button IsCancel="True">Cancel</Button>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>
