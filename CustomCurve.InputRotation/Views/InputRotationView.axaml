@@ -16,31 +16,35 @@
 
 	<Grid RowDefinitions="Auto,*">
 		<TextBlock TextWrapping="Wrap">
-			Applies a global rotation transform to the pointer movement. For the pointer to move exactly horizontally, you will need to move your mouse along the green arrow axis. Flick horizontally through the grid area below to detect your current angle.
+            Applies a global rotation transform to the pointer movement. To move the pointer exactly horizontally, you need to move your mouse along the green arrow axis. Hold Shift and flick horizontally across the grid area below to determine your current angle.
 		</TextBlock>
 
 		<Grid Grid.Row="1" ColumnDefinitions="160,*" Margin="0,20,0,0">
-			<StackPanel VerticalAlignment="Center">
-                <StackPanel Spacing="5" Background="Transparent" ToolTip.Tip="The measured angle of your typical flick">
-                    <TextBlock>Detected flick angle</TextBlock>
+            <Grid RowDefinitions="*,Auto">
+                <StackPanel VerticalAlignment="Center">
+                    <StackPanel Spacing="5" Background="Transparent" ToolTip.Tip="The measured angle of your typical flick">
+                        <TextBlock>Detected flick angle</TextBlock>
 
-                    <Grid ColumnDefinitions="*,Auto">
-                        <TextBlock Text="{Binding DetectedAngle, StringFormat=0.0°}" FontWeight="Bold" VerticalAlignment="Center"/>
-                        <CheckBox Grid.Column="1" IsChecked="{Binding AutoApply}" VerticalAlignment="Center" ToolTip.Tip="Copy detected values to the Rotation angle field">Auto apply</CheckBox>
-					</Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Background="Transparent" Text="{Binding DetectedAngle, StringFormat=0.0°}" FontWeight="Bold" VerticalAlignment="Center" ToolTip.Tip="Click to apply this value" PointerPressed="OnDetectedAngleClick"/>
+                            <CheckBox Grid.Column="1" IsChecked="{Binding AutoApply}" VerticalAlignment="Center" ToolTip.Tip="Copy detected values to the Rotation angle field">Auto apply</CheckBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <Border Height="2" Background="Gray" Opacity="0.3" Margin="10,40"></Border>
+
+                    <StackPanel Spacing="5" Background="Transparent" ToolTip.Tip="Desired rotation angle to apply to the pointer movement">
+                        <TextBlock>Target rotation angle</TextBlock>
+                        <Slider Minimum="-180" Maximum="180" Value="{Binding Angle}" ToolTip.Tip="Use the slider to set the angle"/>
+                        <NumericUpDown Value="{Binding Angle}" FormatString="0.0°" Increment="0.1" ToolTip.Tip="Use the numeric input adjust the value precisely"/>
+                    </StackPanel>
                 </StackPanel>
 
-                <Border Height="2" Background="Gray" Opacity="0.3" Margin="10,40"></Border>
-
-                <StackPanel Spacing="5" Background="Transparent" ToolTip.Tip="Desired rotation angle to apply to the pointer movement">
-                    <TextBlock>Target rotation angle</TextBlock>
-                    <Slider Minimum="-180" Maximum="180" Value="{Binding Angle}" ToolTip.Tip="Use the slider to set the angle"/>
-                    <NumericUpDown Value="{Binding Angle}" FormatString="0.0°" Increment="0.1" ToolTip.Tip="Use the numeric input adjust the value precisely"/>
-                </StackPanel>
-            </StackPanel>
+                <Button Grid.Row="1" Command="{Binding ResetCommand}">Reset to defaults</Button>
+			</Grid>
 
 			<Panel x:Name="DetectionPanel" ClipToBounds="True" Grid.Column="1" Margin="20,0,0,0" Background="Transparent" 
-                   PointerEntered="OnPointerEntered" PointerExited="OnPointerMoved" PointerMoved="OnPointerMoved">
+                   PointerEntered="OnPointerEntered" PointerExited="OnPointerExited" PointerMoved="OnPointerMoved">
                 <Border BorderThickness="2" CornerRadius="10" BorderBrush="Gray" Opacity="0.5">
 					<Border.Background>
 						<VisualBrush TileMode="Tile" DestinationRect="15,15,30,30">

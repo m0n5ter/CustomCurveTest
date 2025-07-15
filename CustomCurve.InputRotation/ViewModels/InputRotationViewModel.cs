@@ -1,5 +1,7 @@
 ﻿using ReactiveUI;
 using System;
+using System.Reactive;
+using System.Reactive.Linq;
 
 namespace CustomCurve.InputRotation.ViewModels;
 
@@ -8,6 +10,19 @@ public class InputRotationViewModel: ViewModelBase
     private double _angle = 10;
     private double _detectedAngle;
     private bool _autoApply;
+
+    public InputRotationViewModel()
+    {
+        ResetCommand = ReactiveCommand.Create(Reset, this.WhenAnyValue(vm => vm.Angle, vm => vm.AutoApply).Select(t => t.Item1 != 0 || t.Item2));
+    }
+
+    private void Reset()
+    {
+        Angle = 0;
+        AutoApply = false;
+    }
+
+    public ReactiveCommand<Unit, Unit> ResetCommand { get; }
 
     public double Angle
     {

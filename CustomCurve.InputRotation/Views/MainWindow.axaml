@@ -12,7 +12,7 @@
         x:Class="CustomCurve.InputRotation.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="CustomCurve | Advanced"
+        Title="Custom Curve Pro | Advanced"
         RenderOptions.BitmapInterpolationMode="HighQuality">
 
     <Design.DataContext>
@@ -47,7 +47,7 @@
             <TabItem Header="VSM" Classes="placeholder"/>
         </TabControl>
 
-        <Grid Grid.Row="1" Margin="0,20,0,0" ColumnDefinitions="Auto,*">
+        <Grid Grid.Row="1" Margin="10,20,10,0" ColumnDefinitions="Auto,*">
             <Button Click="OnThemeClick" ToolTip.Tip="Toggle Dark/Light window theme">Theme</Button>
             
             <StackPanel Grid.Column="1" Spacing="5" Orientation="Horizontal" HorizontalAlignment="Right">
