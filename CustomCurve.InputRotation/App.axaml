@@ -1,10 +1,24 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="CustomCurve.InputRotation.App"
-             RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+<Application 
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
+    x:Class="CustomCurve.InputRotation.App"
+    RequestedThemeVariant="Default">
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
-        <FluentTheme />
+        <actipro:ModernTheme />
     </Application.Styles>
+
+	<Application.Resources>
+        <VisualBrush x:Key="GridVisualBrush" TileMode="Tile" DestinationRect="15,15,30,30">
+            <VisualBrush.Visual>
+                <Panel Width="30" Height="30" Background="#10808080">
+                    <Border Width="1" HorizontalAlignment="Center" Background="#40808080"/>
+                    <Border Height="1" VerticalAlignment="Center" Background="#40808080"/>
+                </Panel>
+            </VisualBrush.Visual>
+        </VisualBrush>
+
+	</Application.Resources>
 </Application>

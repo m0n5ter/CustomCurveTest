@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:CustomCurve.InputRotation.Views"
+        xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
         mc:Ignorable="d"
         CanResize="True"
         MinWidth="600" MinHeight="600" 
@@ -48,11 +49,11 @@
         </TabControl>
 
         <Grid Grid.Row="1" Margin="10,20,10,0" ColumnDefinitions="Auto,*">
-            <Button Click="OnThemeClick" ToolTip.Tip="Toggle Dark/Light window theme">Theme</Button>
+            <actipro:ToggleThemeButton Classes="theme-soft" />
             
             <StackPanel Grid.Column="1" Spacing="5" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button IsDefault="True">Apply</Button>
-                <Button IsCancel="True">Cancel</Button>
+                <Button Classes="theme-soft accent" IsDefault="True">Apply</Button>
+                <Button Classes="theme-soft" IsCancel="True">Cancel</Button>
             </StackPanel>
         </Grid>
 

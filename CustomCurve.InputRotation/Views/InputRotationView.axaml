@@ -6,59 +6,68 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:CustomCurve.InputRotation.ViewModels"
     xmlns:reactiveUi="http://reactiveui.net"
+    xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
     x:Class="CustomCurve.InputRotation.Views.InputRotationView"
-    x:DataType="viewModels:InputRotationViewModel">
+    x:DataType="viewModels:InputRotationViewModel" 
+    ClipToBounds="False">
 
 	<Design.DataContext>
 		<viewModels:InputRotationViewModel/>
 	</Design.DataContext>
 
 	<Grid RowDefinitions="Auto,*">
-		<TextBlock TextWrapping="Wrap">
-            Applies a global rotation transform to the pointer movement. To move the pointer exactly horizontally, you need to move your mouse along the green arrow axis. Hold Shift and flick horizontally across the grid area below to determine your current angle.
-		</TextBlock>
+        <actipro:ShadowChrome>
+            <Border Background="{actipro:ThemeResource Container2BackgroundBrush}" CornerRadius="10">
+                <TextBlock TextWrapping="Wrap" Margin="15">
+                    Applies a global rotation transform to the pointer movement. To move the pointer exactly horizontally, you need to move your mouse along the green arrow axis. Hold Shift and flick horizontally across the grid area below to determine your current angle.
+                </TextBlock>
+			</Border>
+		</actipro:ShadowChrome>
 
-		<Grid Grid.Row="1" ColumnDefinitions="160,*" Margin="0,20,0,0">
+		<Grid Grid.Row="1" ColumnDefinitions="200,*" Margin="0,10,0,0">
             <Grid RowDefinitions="*,Auto">
-                <StackPanel VerticalAlignment="Center">
-                    <StackPanel Spacing="5" Background="Transparent" ToolTip.Tip="The measured angle of your typical flick">
-                        <TextBlock>Detected flick angle</TextBlock>
+                <StackPanel VerticalAlignment="Top" Spacing="10">
+                    <actipro:ShadowChrome>
+                        <Border Background="{actipro:ThemeResource Container2BackgroundBrush}" CornerRadius="10">
+                            <StackPanel Spacing="5" Margin="15" Background="Transparent" ToolTip.Tip="The measured angle of your typical flick">
+                                <TextBlock>Detected flick angle</TextBlock>
 
-                        <Grid ColumnDefinitions="*,Auto">
-                            <TextBlock Background="Transparent" Text="{Binding DetectedAngle, StringFormat=0.0°}" FontWeight="Bold" VerticalAlignment="Center" ToolTip.Tip="Click to apply this value" PointerPressed="OnDetectedAngleClick"/>
-                            <CheckBox Grid.Column="1" IsChecked="{Binding AutoApply}" VerticalAlignment="Center" ToolTip.Tip="Copy detected values to the Rotation angle field">Auto apply</CheckBox>
-                        </Grid>
-                    </StackPanel>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Background="Transparent" Text="{Binding DetectedAngle, StringFormat=0.0°}" FontWeight="Bold" VerticalAlignment="Center" ToolTip.Tip="Click to apply this value" PointerPressed="OnDetectedAngleClick"/>
+                                    <CheckBox Grid.Column="1" IsChecked="{Binding AutoApply}" VerticalAlignment="Center" ToolTip.Tip="Copy detected values to the Rotation angle field">Auto apply</CheckBox>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </actipro:ShadowChrome>
 
-                    <Border Height="2" Background="Gray" Opacity="0.3" Margin="10,40"></Border>
-
-                    <StackPanel Spacing="5" Background="Transparent" ToolTip.Tip="Desired rotation angle to apply to the pointer movement">
-                        <TextBlock>Target rotation angle</TextBlock>
-                        <Slider Minimum="-180" Maximum="180" Value="{Binding Angle}" ToolTip.Tip="Use the slider to set the angle"/>
-                        <NumericUpDown Value="{Binding Angle}" FormatString="0.0°" Increment="0.1" ToolTip.Tip="Use the numeric input adjust the value precisely"/>
-                    </StackPanel>
+                    <actipro:ShadowChrome>
+                        <Border Background="{actipro:ThemeResource Container2BackgroundBrush}" CornerRadius="10">
+                            <StackPanel Spacing="10" Margin="15" Background="Transparent" ToolTip.Tip="Desired rotation angle to apply to the pointer movement">
+                                <TextBlock>Target rotation angle</TextBlock>
+                                <Slider Classes="accent" Minimum="-180" Maximum="180" Value="{Binding Angle}" ToolTip.Tip="Use the slider to set the angle"/>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <NumericUpDown Value="{Binding Angle}" Classes="accent" Increment="0.1" ToolTip.Tip="Use the numeric input adjust the value precisely"
+                                                   FormatString="0.0" Minimum="-180" Maximum="180"/>
+                                    <TextBlock Grid.Column="1" Margin="5,0,0,0">°</TextBlock>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </actipro:ShadowChrome>
                 </StackPanel>
 
-                <Button Grid.Row="1" Command="{Binding ResetCommand}">Reset to defaults</Button>
+                <Button Grid.Row="1" Classes="theme-soft" Command="{Binding ResetCommand}" VerticalAlignment="Bottom">Reset to defaults</Button>
 			</Grid>
 
-			<Panel x:Name="DetectionPanel" ClipToBounds="True" Grid.Column="1" Margin="20,0,0,0" Background="Transparent" 
+            <Panel x:Name="DetectionPanel" ClipToBounds="False" Grid.Column="1" Margin="10,0,0,0" Background="Transparent"
                    PointerEntered="OnPointerEntered" PointerExited="OnPointerExited" PointerMoved="OnPointerMoved">
-                <Border BorderThickness="2" CornerRadius="10" BorderBrush="Gray" Opacity="0.5">
-					<Border.Background>
-						<VisualBrush TileMode="Tile" DestinationRect="15,15,30,30">
-							<VisualBrush.Visual>
-								<Panel Width="30" Height="30">
-									<Border Width="1" HorizontalAlignment="Center" Background="Gray"/>
-									<Border Height="1" VerticalAlignment="Center" Background="Gray"/>
-								</Panel>
-							</VisualBrush.Visual>
-						</VisualBrush>
-					</Border.Background>
-				</Border>
+                <actipro:ShadowChrome>
+                    <Border BorderThickness="2" CornerRadius="10" BorderBrush="{actipro:ThemeResource Container2BorderBrush}"
+                            Background="{DynamicResource GridVisualBrush}">
+                    </Border>
+                </actipro:ShadowChrome>
 
-				<Line x:Name="DetectedLine" StrokeThickness="3" Stroke="DarkRed"/>
+                <Line x:Name="DetectedLine" StrokeThickness="3" Stroke="DarkRed"/>
 
                 <Viewbox>
                     <Panel x:Name="MousePanel" Margin="10" Width="100" Height="100">
@@ -66,11 +75,11 @@
                             <RotateTransform Angle="{Binding Angle}"/>
                         </Panel.RenderTransform>
 
-                        <Image Source="../Assets/mouse.png"/>
+                        <actipro:DynamicImage Source="../Assets/mouse.png"/>
                         <Image Source="../Assets/arrow.png" Margin="0,20,0,0"/>
                     </Panel>
                 </Viewbox>
-			</Panel>
+            </Panel>
 		</Grid>
 	</Grid>
 
